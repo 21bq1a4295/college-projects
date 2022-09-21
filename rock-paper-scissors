@@ -1,0 +1,102 @@
+from random import randint
+from tkinter import *
+
+from PIL import Image, ImageTk
+
+r = Tk()
+k1 = Image.open('F:\\DATA 25052020\\Downloads\\rock.png')
+bg1 = ImageTk.PhotoImage(k1)
+k2 = Image.open('F:\\DATA 25052020\\Downloads\\scissors.png')
+bg2 = ImageTk.PhotoImage(k2)
+k3 = Image.open('F:\\DATA 25052020\\Downloads\\paper.png')
+bg3 = ImageTk.PhotoImage(k3)
+l = ['rock', 'paper', 'scissors']
+u = []
+c = []
+
+
+def score(g, f):
+    ls = Label(r, text="Score:" + str(sum(g)) + "      Computer Score:" + str(sum(f)), font="normal 10")
+    ls.grid(row=0, column=0)
+    ls.update()
+    return
+
+
+def rock():
+    x = randint(0, 2)
+    if l[x] == "scissors":
+        u.append(1)
+        l1 = Label(r, text="computer picked: ", image=bg2, font="normal 10")
+        l1.grid(row=2, column=1)
+    elif l[x] == "rock":
+        l1 = Label(r, text="computer picked: ", image=bg1, font="normal 10")
+        l1.grid(row=2, column=1)
+    else:
+        l1 = Label(r, text="computer picked: ", image=bg3, font="normal 10")
+        l1.grid(row=2, column=1)
+        c.append(1)
+    score(u, c)
+    return
+
+
+def paper():
+    x = randint(0, 2)
+    if l[x] == "rock":
+        l1 = Label(r, text="computer picked: ", image=bg1, font="normal 10")
+        l1.grid(row=2, column=1)
+        u.append(1)
+    elif l[x] == "paper":
+        l1 = Label(r, text="computer picked: ", image=bg3, font="normal 10")
+        l1.grid(row=2, column=1)
+    else:
+        l1 = Label(r, text="computer picked: ", image=bg2, font="normal 10")
+        l1.grid(row=2, column=1)
+        c.append(1)
+    score(u, c)
+    return
+
+
+def scissors():
+    x = randint(0, 2)
+    if l[x] == "paper":
+        l1 = Label(r, text="computer picked: ", image=bg3, font="normal 10")
+        l1.grid(row=2, column=1)
+        u.append(1)
+    elif l[x] == "scissors":
+        l1 = Label(r, text="computer picked: ", image=bg2, font="normal 10")
+        l1.grid(row=2, column=1)
+    else:
+        l1 = Label(r, text="computer picked: ", image=bg1, font="normal 10")
+        l1.grid(row=2, column=1)
+        c.append(1)
+    score(u, c)
+    return
+
+
+def button_disable():
+	b1["state"] = "disable"
+	b2["state"] = "disable"
+	b3["state"] = "disable"
+  
+  
+def result():
+    if len(c) > len(u):
+        l2 = Label(r, text="Computer won! ", font="normal 20")
+    elif len(c) == len(u):
+        l2 = Label(r, text="Tie! ", font="normal 20")
+    else:
+        l2 = Label(r, text="User won! ", font="normal 20")
+    l2.grid(row=4, column=4)
+    button_disable()
+    r.update()
+    
+
+b1 = Button(r, font="normal 20", image=bg1, compound=TOP, command=rock)
+b1.grid(row=1, column=1)
+b3 = Button(r, font="normal 20", image=bg3, compound=TOP, command=paper)
+b3.grid(row=1, column=2)
+b2 = Button(r, font="normal 20", image=bg2, compound=TOP, command=scissors)
+b2.grid(row=2, column=2)
+e = Button(r, text="Exit", command=result)
+e.grid()
+r.mainloop()
